@@ -5,18 +5,7 @@
     "jha"
   ],
   "tagline": "Applied AI engineer building products that solve real problems and make people's work simpler.",
-  "status": "Building mebius, your true personal portable intelligence",
   "open_to_work": true,
-  "portrait": "assets/portrait.jpg",
-  "stack": [
-    "Python",
-    "TypeScript",
-    "Next.js",
-    "NestJS",
-    "PostgreSQL",
-    "Gemini",
-    "LangChain"
-  ],
   "tiles": [
     {
       "label": "creator tech",

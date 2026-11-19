@@ -191,7 +191,7 @@ def hero(P):
         lines = art.read_text("utf-8").splitlines()
         fs, lh = 5, 5  # Plex Mono advances 0.6em, so 5px type is 3px per column
         x0 = 956 - max(len(l) for l in lines) * fs * 0.6
-        y0 = 104
+        y0 = 96
         for i, line in enumerate(lines):
             if line.strip():
                 c.chars.setdefault(("mono", 400, "normal"), set()).update(line)

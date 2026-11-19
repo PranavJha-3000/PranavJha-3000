@@ -7,16 +7,16 @@ Run once locally (needs: pip install pillow). CI only reads the .txt, so it neve
 import sys
 from pathlib import Path
 
-from PIL import Image, ImageFilter, ImageOps
+from PIL import Image, ImageChops, ImageFilter, ImageOps
 
 ROOT = Path(__file__).resolve().parent.parent
 COLS = int(sys.argv[1]) if len(sys.argv) > 1 else 120
 ROWS = int(sys.argv[2]) if len(sys.argv) > 2 else 72
 RAMP = " .'`,:;-~+=*%#@"  # light to dark; ASCII only, so every glyph exists in the mono subset
 
-orig = Image.open(ROOT / "assets/portrait.webp").convert("L").crop((150, 40, 1150, 1040))  # square on head and collar
-src = Image.blend(orig, ImageOps.equalize(orig), 0.5)  # lift the flat skin tones so eyes and glasses read
-src = ImageOps.autocontrast(src, cutoff=1).filter(ImageFilter.UnsharpMask(radius=3, percent=160, threshold=2))
+orig = Image.open(ROOT / "assets/portrait.webp").convert("L").crop((160, 40, 1110, 990))  # square on head and chin
+local = ImageChops.subtract(orig, orig.filter(ImageFilter.GaussianBlur(26)), 1, 128)  # remove the flat skin tone, keep lines
+src = ImageOps.autocontrast(Image.blend(orig, local, 0.7), cutoff=1).filter(ImageFilter.UnsharpMask(radius=2, percent=120, threshold=2))
 im = src.resize((COLS, ROWS), Image.LANCZOS)  # cells are 1.67x taller than wide, so a square crop keeps proportions
 bg = orig.resize((COLS, ROWS), Image.LANCZOS).load()  # the flat cream paper stays blank
 px = im.load()
