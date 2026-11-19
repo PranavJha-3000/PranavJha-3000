@@ -4,7 +4,7 @@
 
 <p align="center"><img src="./cards/chart.svg" width="100%" alt="Contributions per month, streak and active days"/></p>
 
-<p align="center"><a href="https://github.com/PranavJha-3000/HeyGanesh"><img src="./cards/repo-1.svg" width="32.5%" alt="HeyGanesh"/></a><img src="./cards/gap.svg" width="1.2%" alt=""/><a href="https://github.com/PranavJha-3000/interlude"><img src="./cards/repo-2.svg" width="32.5%" alt="interlude"/></a><img src="./cards/gap.svg" width="1.2%" alt=""/><a href="https://github.com/PranavJha-3000/Shipbuds"><img src="./cards/repo-3.svg" width="32.5%" alt="Shipbuds"/></a></p>
+<p align="center"><a href="https://github.com/PranavJha-3000/HeyGanesh"><img src="./cards/repo-1.svg" width="32.5%" alt="HeyGanesh"/></a><img src="./cards/gap.svg" width="1.2%" alt=""/><a href="https://github.com/PranavJha-3000/interlude"><img src="./cards/repo-2.svg" width="32.5%" alt="interlude"/></a><img src="./cards/gap.svg" width="1.2%" alt=""/><a href="https://github.com/PranavJha-3000/IloveEmployement"><img src="./cards/repo-3.svg" width="32.5%" alt="IloveEmployement"/></a></p>
 
 <p align="center"><img src="./cards/graph.svg" width="100%" alt="Contribution graph"/></p>
 
