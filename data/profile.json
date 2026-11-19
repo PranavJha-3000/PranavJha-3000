@@ -4,29 +4,25 @@
     "pranav",
     "jha"
   ],
-  "tagline": "applied ai engineer building products that solve real problems and make people's work simpler.",
-  "status": {
-    "label": "building",
-    "name": "mebius",
-    "rest": "your true personal portable intelligence"
-  },
+  "tagline": "Applied AI engineer building products that solve real problems and make people's work simpler.",
+  "status": "Building mebius, your true personal portable intelligence",
   "open_to_work": true,
   "portrait": "assets/portrait.jpg",
   "stack": [
-    "python",
-    "typescript",
-    "next.js",
-    "nestjs",
-    "postgresql",
-    "gemini",
-    "langchain"
+    "Python",
+    "TypeScript",
+    "Next.js",
+    "NestJS",
+    "PostgreSQL",
+    "Gemini",
+    "LangChain"
   ],
   "tiles": [
     {
       "label": "creator tech",
       "big": "1M+",
       "word": "profiles",
-      "body": "the creator dataset behind upstagex, with gemini briefs on nestjs and gcp.",
+      "body": "The creator dataset behind UpstageX, with Gemini briefs on NestJS and GCP.",
       "href": "https://pranavjha.in/",
       "color": "blue"
     },
@@ -34,7 +30,7 @@
       "label": "desktop ai",
       "big": "95%",
       "word": "accuracy",
-      "body": "heyganesh, my screen-aware ai tutor, finds the ui element you mean.",
+      "body": "HeyGanesh, my screen-aware AI tutor, finds the UI element you mean.",
       "href": "https://heyganesh-ai.vercel.app/",
       "color": "red"
     },
@@ -42,7 +38,7 @@
       "label": "career tools",
       "big": "50+",
       "word": "users",
-      "body": "i love employment turns a resume into gaps to fix and interviews to practise.",
+      "body": "I Love Employment turns a resume into gaps to fix and interviews to practise.",
       "href": "https://github.com/PranavJha-3000/IloveEmployement",
       "color": "yellow"
     }
@@ -50,17 +46,17 @@
   "featured": [
     {
       "name": "HeyGanesh",
-      "desc": "a screen-aware ai tutor for windows. hold ctrl+alt, ask out loud, and it points at your screen and teaches.",
+      "desc": "A screen-aware AI tutor for Windows. Hold Ctrl+Alt, ask out loud, and it points at your screen and teaches.",
       "color": "blue"
     },
     {
       "name": "interlude",
-      "desc": "a restaurant revenue engine delivered through gamified wait-time experiences.",
+      "desc": "A restaurant revenue engine delivered through gamified wait-time experiences.",
       "color": "red"
     },
     {
       "name": "Shipbuds",
-      "desc": "my type of vibe-coding platform.",
+      "desc": "My type of vibe-coding platform.",
       "color": "yellow"
     }
   ],
@@ -81,5 +77,6 @@
       "github",
       "https://github.com/PranavJha-3000"
     ]
-  ]
+  ],
+  "role": "Applied AI engineer"
 }
