@@ -164,8 +164,6 @@ def label(c, x, y, text, fill=None, anchor="start", d=None):
 
 # ---------------------------------------------------------------- hero
 def hero(P):
-    portrait = ROOT / P["portrait"] if P.get("portrait") else None
-    portrait = portrait if portrait and portrait.exists() else None
     first, last = (w.capitalize() for w in P["name"])
     c = Card("hero", 1000, 500, f"{first} {last}. {P['tagline']}")
     c.add(f'<rect x="44" y="44" width="10" height="10" rx="2.5" fill="{C["blue"]}"/>', 0.0)
@@ -188,21 +186,19 @@ def hero(P):
     host = urlparse(P["links"][0][1]).netloc
     c.add(c.te(44, 468, host, "mono", 14, fill=C["ink"])
           + arrow(44 + width("mono", 400, False, host, 14) + 12, 456, C["blue"], 0.75), 0.5)
-    if portrait:
-        mime = "image/png" if portrait.suffix == ".png" else "image/jpeg"
-        b64 = base64.b64encode(portrait.read_bytes()).decode()
-        c.defs += '<clipPath id="pc"><circle cx="820" cy="236" r="110"/></clipPath>'
-        c.add(f'<image href="data:{mime};base64,{b64}" x="710" y="126" width="220" height="220" '
-              f'preserveAspectRatio="xMidYMid slice" clip-path="url(#pc)"/>'
-              f'<circle cx="820" cy="236" r="110" fill="none" stroke="{C["blue"]}" stroke-width="2"/>', 0.2)
-    else:  # no portrait: a quiet stack column fills the right side
-        label(c, 700, 128, "stack", d=0.3)
-        c.add(f'<rect x="700" y="142" width="256" height="1" fill="{C["line"]}"/>', 0.3)
-        for i, s in enumerate(P["stack"]):
-            c.t(700, 176 + i * 30, s, "mono", 15, fill=C["ink"], d=0.35 + i * 0.04)
-        lines = wrap(P["status"], "sans", 15, 256)
+    art = ROOT / "data/portrait.txt"
+    if art.exists():  # a character halftone, drawn in top to bottom (made by scripts/make_portrait.py)
+        lines = art.read_text("utf-8").splitlines()
+        fs, lh = 5, 5  # Plex Mono advances 0.6em, so 5px type is 3px per column
+        x0 = 956 - max(len(l) for l in lines) * fs * 0.6
+        y0 = 104
         for i, line in enumerate(lines):
-            c.t(700, 468 - 21 * (len(lines) - 1 - i), line, "sans", 15, fill=C["muted"], d=0.6)
+            if line.strip():
+                c.chars.setdefault(("mono", 400, "normal"), set()).update(line)
+                lead = len(line) - len(line.lstrip())  # indent by position, so no leading spaces to preserve
+                row = (f'<text x="{x0 + lead * fs * 0.6:.1f}" y="{y0 + i * lh}" font-family="{CSS_FAMILY["mono"]},monospace" '
+                       f'font-size="{fs}" fill="{C["ink"]}" xml:space="preserve">{escape(line.lstrip())}</text>')
+                c.add(row, 0.2 + i * 0.02)
     return c
 
 
