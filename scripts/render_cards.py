@@ -31,11 +31,11 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "cards"
 STATIC = os.environ.get("STATIC") == "1"
 
-# Colours are the CSS variables of pranavjha.in.
-C = dict(bg="#0f1011", panel="#17191a", line="#262829", ink="#d4be98", muted="#7c6f64",
-         faint="#5a524c", green="#a9b665", red="#ea6962", yellow="#d8a657")
-HEAT = ["#1c1f20", "#34472b", "#567539", "#8aa953", "#c4dc7e"]  # site's contribution ramp
-MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
+# Palette sampled from the design reference: off-white cards, ink, and a blue/red/yellow trio.
+C = dict(card="#f3f3f1", ink="#111111", muted="#6e6e69", faint="#c8c8c2", line="#dcdcd6",
+         blue="#3057ff", red="#ef3b2d", yellow="#ffc61a", white="#ffffff")
+HEAT = ["#e4e4e0", "#c9d3fb", "#8fa2f7", "#4f6df5", "#2640e8"]
+MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 ADV = 0.6  # IBM Plex Mono advance width, in em
 
 FONTS = {(w, s): ROOT / "fonts" / f"IBMPlexMono-{w}-{s}.woff"
@@ -86,9 +86,9 @@ def arrow(x, y, color):
 
 
 class Card:
-    def __init__(self, name, w, h, label, fill=None, border=True, radius=14):
+    def __init__(self, name, w, h, label, fill=None, border=True, radius=20):
         self.name, self.w, self.h, self.label = name, w, h, label
-        self.fill, self.border, self.radius = fill or C["panel"], border, radius
+        self.fill, self.border, self.radius = fill or C["card"], border, radius
         self.body, self.defs, self.faces, self.chars = [], "", set(), {" "}
 
     def add(self, raw, d=None):
@@ -154,13 +154,13 @@ def hero(P):
     if P.get("open_to_work"):
         label = "open to work"
         cx = 960 - len(label) * 13 * ADV - 14
-        dot = f'<circle cx="{cx:.1f}" cy="53" r="4" fill="{C["green"]}"/>'
+        dot = f'<circle cx="{cx:.1f}" cy="53" r="4" fill="{C["blue"]}"/>'
         if not STATIC:
-            dot += (f'<circle class="smil" cx="{cx:.1f}" cy="53" r="4" fill="none" stroke="{C["green"]}" opacity="0">'
+            dot += (f'<circle class="smil" cx="{cx:.1f}" cy="53" r="4" fill="none" stroke="{C["blue"]}" opacity="0">'
                     '<animate attributeName="r" values="4;11" dur="2.4s" begin="0s" repeatCount="indefinite"/>'
                     '<animate attributeName="opacity" values="0.8;0" dur="2.4s" begin="0s" repeatCount="indefinite"/></circle>')
-        c.add(dot + c.te(960, 58, label, 13, fill=C["green"], anchor="end"), 0.1)
-    c.t(38, 158, [(P["name"][0] + " ", 600, False, C["ink"]), (P["name"][1], 500, True, C["green"])],
+        c.add(dot + c.te(960, 58, label, 13, fill=C["blue"], anchor="end"), 0.1)
+    c.t(38, 158, [(P["name"][0] + " ", 600, False, C["ink"]), (P["name"][1], 500, True, C["blue"])],
         d=0.15, size=88, ls=-3.5)
     maxw = 590 if portrait else 860
     for i, line in enumerate(wrap(P["tagline"], 17, maxw)):
@@ -175,8 +175,8 @@ def hero(P):
         x += w + 10
     c.add("".join(chips), 0.4)
     st = P["status"]
-    c.add(f'<path d="M40 303l9 6-9 6z" fill="{C["green"]}"/>'
-          + c.te(60, 316, [(st["label"] + " ", 400, False, C["muted"]), (st["name"], 600, False, C["green"]),
+    c.add(f'<path d="M40 303l9 6-9 6z" fill="{C["blue"]}"/>'
+          + c.te(60, 316, [(st["label"] + " ", 400, False, C["muted"]), (st["name"], 600, False, C["blue"]),
                            (", " + st["rest"], 400, False, C["muted"])], 14), 0.5)
     if portrait:
         mime = "image/png" if portrait.suffix == ".png" else "image/jpeg"
@@ -184,16 +184,17 @@ def hero(P):
         c.defs += '<clipPath id="pc"><circle cx="850" cy="176" r="88"/></clipPath>'
         c.add(f'<image href="data:{mime};base64,{b64}" x="762" y="88" width="176" height="176" '
               f'preserveAspectRatio="xMidYMid slice" clip-path="url(#pc)"/>'
-              f'<circle cx="850" cy="176" r="88" fill="none" stroke="{C["green"]}" stroke-width="2"/>', 0.2)
+              f'<circle cx="850" cy="176" r="88" fill="none" stroke="{C["blue"]}" stroke-width="2"/>', 0.2)
     return c
 
 
 # ---------------------------------------------------------------- tiles
 def tile(spec, i):
     base = 0.6 + i * 0.12
-    col, dark = C[spec["color"]], C["bg"]
-    c = Card(f"tile-{i + 1}", 320, 250, f"{spec['big']} {spec['word']}: {spec['body']}", fill=col, border=False, radius=18)
-    c.t(28, 46, spec["label"], 13, 500, fill=dark, ls=0.5, d=base)
+    col = C[spec["color"]]
+    dark = C["ink"] if spec["color"] == "yellow" else C["white"]  # text on the tile
+    c = Card(f"tile-{i + 1}", 320, 250, f"{spec['big']} {spec['word']}: {spec['body']}", fill=col, border=False, radius=20)
+    c.t(28, 46, spec["label"].upper(), 13, 500, fill=dark, ls=1.6, d=base)
     c.add(arrow(277, 38, dark), base)
     n = len(spec["big"]) + 1 + len(spec["word"])
     size = min(40, int(264 / (n * (ADV - 0.04))))
@@ -237,29 +238,28 @@ def load(P):
 def chart(S):
     c = Card("chart", 1000, 450, f"{S['total']:,} contributions in the last 12 months, "
              f"current streak {S['current']} days, longest {S['longest']}, busiest day {S['best']}")
-    c.t(40, 60, "the last 12 months on github", 13, fill=C["muted"], d=1.1)
-    c.t(40, 124, [(f"{S['total']:,} ", 600, False, C["ink"]), ("contributions", 500, True, C["green"])],
+    c.t(40, 60, "THE LAST 12 MONTHS ON GITHUB", 13, fill=C["muted"], ls=1.6, d=1.1)
+    c.t(40, 124, [(f"{S['total']:,} ", 600, False, C["ink"]), ("contributions", 500, True, C["blue"])],
         d=1.15, size=52, ls=-2.1)
-    base_y, max_h, x0, pitch, bw = 380, 200, 48, 52, 36
-    top = max(S["months"][:-1] or [1])
-    peak = S["months"].index(top)
+    base_y, max_h, x0, pitch, bw = 380, 200, 40, 54, 40
+    top = max(S["months"]) or 1  # the partial month can already be the biggest, so it sets the scale too
+    complete = S["months"][:-1] or [0]
+    peak = S["months"].index(max(complete))  # only a finished month earns the highlight
     for i, (v, (y, m)) in enumerate(zip(S["months"], S["keys"])):
         x, h = x0 + i * pitch, max(4, round(v / top * max_h))
         partial = i == len(S["months"]) - 1
         if partial:
-            bar = (f'<rect x="{x}" y="{base_y - h}" width="{bw}" height="{h}" rx="4" fill="none" '
-                   f'stroke="{C["faint"]}" stroke-dasharray="3 3"/>')
+            bar = f'<rect x="{x}" y="{base_y - h}" width="{bw}" height="{h}" rx="5" fill="{C["faint"]}"/>'
         else:
-            fill = C["green"] if i == peak else C["ink"]
-            op = "" if i == peak else ' fill-opacity=".55"'
-            bar = f'<rect x="{x}" y="{base_y - h}" width="{bw}" height="{h}" rx="4" fill="{fill}"{op}/>'
+            fill = C["blue"] if i == peak else C["ink"]
+            bar = f'<rect x="{x}" y="{base_y - h}" width="{bw}" height="{h}" rx="5" fill="{fill}"/>'
         c.body.append(bar if STATIC else bar.replace("<rect ", f'<rect class="b" style="animation-delay:{1.3 + i * 0.05:.2f}s" ', 1))
         c.t(x + bw / 2, 404, MONTHS[m - 1], 12, fill=C["muted"], anchor="middle", d=1.3 + i * 0.03)
-        if i == peak:
-            c.t(x + bw / 2, base_y - h - 10, f"{v:,}", 13, 500, fill=C["green"], anchor="middle", d=1.9)
+        if i == peak or partial:
+            c.t(x + bw / 2, base_y - h - 10, f"{v:,}", 13, 500, fill=C["blue"] if i == peak else C["muted"], anchor="middle", d=1.9)
     cur, plural = S["current"], "day" if S["current"] == 1 else "days"
     rows = [
-        ([(f"{cur} ", 600, False, C["ink"]), (plural, 500, True, C["green"])], f"current streak, longest {S['longest']}d"),
+        ([(f"{cur} ", 600, False, C["ink"]), (plural, 500, True, C["blue"])], f"current streak, longest {S['longest']}d"),
         ([(f"{S['active']} ", 600, False, C["ink"]), (f"/ {S['span']}", 400, False, C["muted"])], "days with a commit"),
         ([(f"{S['best']}", 600, False, C["ink"])], "on the busiest day"),
     ]
@@ -291,9 +291,9 @@ def repo(spec, meta, i):
 def heatmap(S):
     c = Card("graph", 1000, 320, f"Contribution graph for the last year, {S['total']:,} contributions")
     base = 2.3
-    c.t(40, 66, [("every day, ", 600, False, C["ink"]), ("in green", 500, True, C["green"])],
+    c.t(40, 68, [("Every day, ", 600, False, C["ink"]), ("in blue", 500, True, C["blue"])],
         d=base, size=30, ls=-1.2)
-    c.t(960, 62, "refreshed daily", 13, fill=C["muted"], anchor="end", d=base)
+    c.t(960, 62, "REFRESHED DAILY", 13, fill=C["muted"], anchor="end", ls=1.6, d=base)
     cols, col = [], []
     for d, n, lv in S["days"]:
         if (d.weekday() + 1) % 7 == 0 and col:  # weeks start on Sunday
@@ -301,28 +301,27 @@ def heatmap(S):
             col = []
         col.append((d, n, lv))
     cols.append(col)
-    pitch, cell = 17, 14
-    gx = round((1000 - (len(cols) * pitch - 3)) / 2)
-    gy = 100
+    gap, gx, gy = 3.0, 40.0, 98
+    pitch = (920 + gap) / len(cols)  # grid spans exactly the content width, 40..960
+    cell = pitch - gap
     labelled = -9
     labels = []
     for ci, wk in enumerate(cols):
-        cells = []
-        for d, n, lv in wk:
-            cells.append(f'<rect x="{gx + ci * pitch}" y="{gy + ((d.weekday() + 1) % 7) * pitch}" width="{cell}" '
-                         f'height="{cell}" rx="3" fill="{HEAT[lv]}"/>')
+        cells = [f'<rect x="{gx + ci * pitch:.2f}" y="{gy + ((d.weekday() + 1) % 7) * pitch:.2f}" width="{cell:.2f}" '
+                 f'height="{cell:.2f}" rx="3.5" fill="{HEAT[lv]}"/>' for d, n, lv in wk]
         grp = "".join(cells)
         c.body.append(grp if STATIC else f'<g class="r" style="animation-delay:{base + 0.2 + ci * 0.012:.3f}s">{grp}</g>')
         first = wk[0][0]
         prev = cols[ci - 1][0][0] if ci else None
-        if (prev is None or prev.month != first.month) and ci - labelled >= 3 and ci >= 1:
-            labels.append(c.te(gx + ci * pitch, 246, MONTHS[first.month - 1], 12, fill=C["muted"]))
+        if (prev is None or prev.month != first.month) and ci - labelled >= 4 and ci >= 1:
+            labels.append(c.te(gx + ci * pitch, 258, MONTHS[first.month - 1], 12, fill=C["muted"]))
             labelled = ci
     c.add("".join(labels), base + 0.5)
-    lx = 831
-    leg = c.te(lx - 8, 291, "less", 12, fill=C["muted"], anchor="end")
-    leg += "".join(f'<rect x="{lx + k * 18}" y="280" width="{cell}" height="{cell}" rx="3" fill="{HEAT[k]}"/>' for k in range(5))
-    leg += c.te(lx + 98, 291, "more", 12, fill=C["muted"])
+    step, ly = 18, 292  # legend on its own row: the month labels run to the right edge
+    lx = 839  # 5 squares + 8px + the 4-char word 'more' end exactly at x=960
+    leg = c.te(lx - 8, ly, "less", 12, fill=C["muted"], anchor="end")
+    leg += "".join(f'<rect x="{lx + k * step}" y="{ly - 11}" width="12" height="12" rx="3" fill="{HEAT[k]}"/>' for k in range(5))
+    leg += c.te(960, ly, "more", 12, fill=C["muted"], anchor="end")
     c.add(leg, base + 0.6)
     return c
 
@@ -350,6 +349,7 @@ def main():
     cards.append(chart(S))
     cards += [repo(f, S["D"]["repos"].get(f["name"], {}), i) for i, f in enumerate(P["featured"])]
     cards.append(heatmap(S))
+    cards.append(Card("gap", 10, 10, "", border=False, fill="none"))
     OUT.mkdir(exist_ok=True)
     for old in OUT.glob("*.svg"):
         old.unlink()

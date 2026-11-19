@@ -28,7 +28,7 @@
       "word": "profiles",
       "body": "the creator dataset behind upstagex, with gemini briefs on nestjs and gcp.",
       "href": "https://pranavjha.in/",
-      "color": "green"
+      "color": "blue"
     },
     {
       "label": "desktop ai",
@@ -51,7 +51,7 @@
     {
       "name": "HeyGanesh",
       "desc": "a screen-aware ai tutor for windows. hold ctrl+alt, ask out loud, and it points at your screen and teaches.",
-      "color": "green"
+      "color": "blue"
     },
     {
       "name": "interlude",

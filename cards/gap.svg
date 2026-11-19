@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 10 10" width="10" height="10" role="img" aria-label="" font-family="PlexMono,ui-monospace,monospace"><title></title><style>@keyframes rise{from{opacity:0;transform:translateY(10px)}}
+@keyframes grow{from{transform:scaleY(0)}}
+@keyframes glint{0%{opacity:0;transform:translateX(-150px) skewX(-20deg)}25%,75%{opacity:.4}100%{opacity:0;transform:translateX(470px) skewX(-20deg)}}
+.r{animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+.b{transform-box:fill-box;transform-origin:50% 100%;animation:grow .8s cubic-bezier(.2,.7,.2,1) both}
+.gl{opacity:0;animation:glint 1.6s ease-in-out both}
+@media (prefers-reduced-motion:no-preference){.twin{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.smil{display:none}}</style><defs></defs><rect x=".5" y=".5" width="9" height="9" rx="20" fill="none"/></svg>
