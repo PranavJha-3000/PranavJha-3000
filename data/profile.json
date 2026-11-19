@@ -1,0 +1,85 @@
+{
+  "username": "PranavJha-3000",
+  "name": [
+    "pranav",
+    "jha"
+  ],
+  "tagline": "applied ai engineer building products that solve real problems and make people's work simpler.",
+  "status": {
+    "label": "building",
+    "name": "mebius",
+    "rest": "your true personal portable intelligence"
+  },
+  "open_to_work": true,
+  "portrait": "assets/portrait.jpg",
+  "stack": [
+    "python",
+    "typescript",
+    "next.js",
+    "nestjs",
+    "postgresql",
+    "gemini",
+    "langchain"
+  ],
+  "tiles": [
+    {
+      "label": "creator tech",
+      "big": "1M+",
+      "word": "profiles",
+      "body": "the creator dataset behind upstagex, with gemini briefs on nestjs and gcp.",
+      "href": "https://pranavjha.in/",
+      "color": "green"
+    },
+    {
+      "label": "desktop ai",
+      "big": "95%",
+      "word": "accuracy",
+      "body": "heyganesh, my screen-aware ai tutor, finds the ui element you mean.",
+      "href": "https://heyganesh-ai.vercel.app/",
+      "color": "red"
+    },
+    {
+      "label": "career tools",
+      "big": "50+",
+      "word": "users",
+      "body": "i love employment turns a resume into gaps to fix and interviews to practise.",
+      "href": "https://github.com/PranavJha-3000/IloveEmployement",
+      "color": "yellow"
+    }
+  ],
+  "featured": [
+    {
+      "name": "HeyGanesh",
+      "desc": "a screen-aware ai tutor for windows. hold ctrl+alt, ask out loud, and it points at your screen and teaches.",
+      "color": "green"
+    },
+    {
+      "name": "interlude",
+      "desc": "a restaurant revenue engine delivered through gamified wait-time experiences.",
+      "color": "red"
+    },
+    {
+      "name": "Shipbuds",
+      "desc": "my type of vibe-coding platform.",
+      "color": "yellow"
+    }
+  ],
+  "links": [
+    [
+      "portfolio",
+      "https://pranavjha.in/"
+    ],
+    [
+      "linkedin",
+      "https://www.linkedin.com/in/pranav-jha-3000s/"
+    ],
+    [
+      "resume",
+      "https://pranavjha.in/resume.pdf"
+    ],
+    [
+      "github",
+      "https://github.com/PranavJha-3000"
+    ]
+  ]
+}
